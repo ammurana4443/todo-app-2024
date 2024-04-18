@@ -1,10 +1,14 @@
-import React from 'react';
+import { useContext } from 'react';
 import styles from "./WelcomeMessage.module.css";
+import TodoItemsContext from '../store/TodoItemsContext';
+
+
 
 const WelcomeMessage = () => {
+  const { todoItems } = useContext(TodoItemsContext);
   return (
-    <p className={styles.welcome}>Enjoy Your Day</p>
-  )
-}
+    !todoItems.length && <p className={styles.welcome}>Enjoy Your Day</p>
+  );
+};
 
 export default WelcomeMessage;

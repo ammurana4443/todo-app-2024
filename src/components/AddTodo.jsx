@@ -1,8 +1,9 @@
+import { useContext } from "react";
 import { useState } from "react";
-import { BiMessageAdd } from "react-icons/bi";
+import TodoItemsContext from "../store/TodoItemsContext";
 
-
-function AddTodo({ onNewItem }) {
+function AddTodo() {
+  const { addNewItem, deleteItem } = useContext(TodoItemsContext);
   const [todoName, setTodoName] = useState("");
   const [dueDate, setDueDate] = useState("");
 
@@ -14,33 +15,33 @@ function AddTodo({ onNewItem }) {
     setDueDate(event.target.value);
   };
 
-  const handleAddButtonClicked = () => {
-    onNewItem(todoName, dueDate);
+  const handleAddButtonClicked = (event) => {
+    if (!todoName || !dueDate) {
+      alert("Please enter both Todo Name and Due Date.");
+      return;
+    }
+    event.preventDefault();
+    addNewItem(todoName, dueDate);
     setDueDate("");
     setTodoName("");
   };
 
   return (
     <div className="container text-center">
-      <div className="row ar-row">
+      <div className="row kg-row">
         <div className="col-6">
-          <input
-            type="text"
-            placeholder="Enter Todo Here"
-            value={todoName}
-            onChange={handleNameChange}
-          />
+          <input type="text" placeholder="Enter Todo Here" value={todoName} onChange={handleNameChange} />
         </div>
         <div className="col-4">
           <input type="date" value={dueDate} onChange={handleDateChange} />
         </div>
         <div className="col-2">
           <button
-            type="button"
-            className="btn btn-success ar-button"
+            type="submit"
+            className="btn btn-success kg-button"
             onClick={handleAddButtonClicked}
           >
-            <BiMessageAdd />
+            Add
           </button>
         </div>
       </div>
